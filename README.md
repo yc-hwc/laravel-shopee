@@ -1,5 +1,5 @@
 # php-shopee
-PHP Shopee SDK
+PHP Shopee v2 SDK
 
 #### 安装教程
 ````
