@@ -1,5 +1,5 @@
 {
-  "name": "yc-hwc/php-shopee",
+  "name": "yc-hwc/laravel-shopee",
   "description": "PHP Shopee SDK",
   "minimum-stability": "stable",
   "license": "proprietary",
