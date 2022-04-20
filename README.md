@@ -17,7 +17,7 @@ composer require yc-hwc/laravel-shopee
         'sign' => '',
     ];
     
-    $shopeeSDK = PHPShopee\ShopeeSDK::config($config);
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
     $response = $shopeeSDK->firstMile
     ->generateFirstMileTrackingNumber()
     ->withBody([
