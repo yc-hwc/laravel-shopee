@@ -3,9 +3,12 @@
 namespace PHPShopee\V2;
 
 use PHPShopee\ShopeeSDK;
+use PHPShopee\V2\Traits\Api;
 
 abstract class ShopeeResource
 {
+    use Api;
+
     protected $resourceUrl;
 
     protected $parentResource;
@@ -14,20 +17,10 @@ abstract class ShopeeResource
 
     protected $shopeeSDK;
 
-    protected $requestMethod = 'post';
-
-    protected $httpHeaders = [
-        'Content-type' => 'application/json',
-        'Accept'       => 'application/json',
-    ];
-
     public function __construct(ShopeeSDK $shopeeSDK)
     {
         $this->shopeeSDK = $shopeeSDK;
-    }
-
-    public function generateUrl()
-    {
-        $this->resourceUrl = $this->parentResource . $this->childResources;
+        $this->resourceUrl = &$shopeeSDK->config['shopeeUrl'];
+        $this->setHttpClient();
     }
 }
