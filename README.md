@@ -8,6 +8,8 @@ composer require yc-hwc/laravel-shopee
 
 #### 用法
 ````php
+<?php
+
     $config = [
         'shopeeUrl' => '',
         'partnerId' => '',
