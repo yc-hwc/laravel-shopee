@@ -2,11 +2,13 @@
 
 namespace PHPShopee\V2;
 
+use PHPShopee\V2\Traits\ShopApi;
+
 class FirstMile extends ShopeeResource
 {
-    protected $parentResource = '/api/v2/first_mile';
+    use ShopApi;
 
-    protected $apiType = 'shop'; // api类型 shop|merchant|public
+    protected $parentResource = '/api/v2/first_mile';
 
     /**
      * @Author: hwj

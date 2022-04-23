@@ -3,19 +3,20 @@
 
 namespace PHPShopee\V2;
 
+use PHPShopee\V2\Traits\AuthorizeApi;
 
 class Shop extends ShopeeResource
 {
-    protected $parentResource = '/api/v2/shop';
+    use AuthorizeApi;
 
-    protected $apiType = 'auth';
+    protected $parentResource = '/api/v2/shop';
 
     /**
      * @Author: hwj
      * @DateTime: 2022/4/23 11:28
      * @return $this
      */
-    public function authorize()
+    public function authPartner()
     {
         $this->childResources = '/auth_partner';
         return $this;

@@ -16,7 +16,8 @@ class ShopeeSDK
     protected $defaultApiVersion = 'V2';
 
     protected $resources = [
-        'firstMile'
+        'firstMile',
+        'shop'
     ];
 
     public $config = [

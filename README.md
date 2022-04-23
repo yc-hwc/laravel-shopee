@@ -1,4 +1,4 @@
-# php-shopee
+# laravel-shopee
 PHP Shopee v2 SDK
 
 #### 安装教程
@@ -6,12 +6,12 @@ PHP Shopee v2 SDK
 composer require yc-hwc/laravel-shopee
 ````
 
-#### 用法
-````php
-<?php
+### 用法
 
+#### 配置
+````
     $config = [
-        'shopeeUrl'   => '',
+        'shopeeUrl'   => 'https://partner.test-stable.shopeemobile.com',
         'partnerId'   => '',
         'partnerKey'  => '',
         'accessToken' => '',
@@ -19,19 +19,51 @@ composer require yc-hwc/laravel-shopee
     ];
     
     $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
-    $response = $shopeeSDK->firstMile
-    ->generateFirstMileTrackingNumber()
-    ->withBody([
+````
+#### [店铺授权](https://open.shopee.com/documents/v2/[中文版]%20OpenAPI%202.0%20Overview?module=87&type=2)
+````
+    $config = [
+        'shopeeUrl'  => 'https://partner.test-stable.shopeemobile.com',
+        'partnerId'  => 'xxxxxxx',
+        'partnerKey' => 'xxxxxxxxxxxxxx',
+    ];
+
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
+    $response = $shopeeSDK->shop
+        ->authPartner()
+        ->withQueryString([
+            'redirect' => 'https://www.baidu.com/',
+        ])
+        ->get();
+
+    return $response;
+````
+#### [generate first mile tracking number](https://open.shopee.com/documents/v2/v2.first_mile.generate_first_mile_tracking_number?module=96&type=1)
+````
+    $config = [
+        'shopeeUrl'   => 'https://partner.test-stable.shopeemobile.com',
+        'partnerId'   => '',
+        'partnerKey'  => '',
+        'accessToken' => '',
+        'shopId'      => '',
+    ];
+    
+    $params = [
         'declare_date' => '',
         'quantity' => 1,
         'seller_info' => [
-            'name'    => "Tom",
-            'address' => "某省某市某区某村几栋几单元几号",
+            'name'    => "tom",
+            'address' => "xxxxxxx",
             'region'  => "CN",
-            'zipcode' => "123456",
-            'phone'   => "1234567"
+            'zipcode' => "1xxxx15",
+            'phone'   => "186xxxxxx49"
         ]
-    ])
+    ]
+    
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
+    $response = $shopeeSDK->firstMile
+    ->generateFirstMileTrackingNumber()
+    ->withBody($params)
     ->post();
     
     print_r($response);

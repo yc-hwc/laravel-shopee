@@ -38,6 +38,8 @@ trait Api
         'Accept'       => 'application/json',
     ];
 
+    protected $shopeeSDK;
+
     /**
      * @Author: hwj
      * @DateTime: 2022/4/23 11:18
@@ -46,8 +48,9 @@ trait Api
     protected function generateUrl()
     {
         $this->uri = $this->parentResource . $this->childResources;
-        $this->url = $this->resourceUrl;
+        $this->url = $this->shopeeSDK->config['shopeeUrl'];
         $this->timestamp = time();
+        $this->setApiCommonParameters();
         return $this;
     }
 
@@ -59,56 +62,22 @@ trait Api
     protected function setApiCommonParameters()
     {
         $shopeeSDK = &$this->shopeeSDK;
-
-        if ($this->apiType == 'auth') {
-            $baseString = sprintf('%s%s%s%s', ...[
-                    $shopeeSDK->config['partnerId'],
-                    $this->uri,
-                    $this->timestamp,
-                ]
-            );
-
-            $query = [
-                'partner_id'   => $shopeeSDK->config['partnerId'],
-                'timestamp'    => $this->timestamp,
-            ];
-
-            $this->commonQueryString = http_build_query(array_merge($query, [
-                'sign' => $this->generateSign($baseString, $shopeeSDK->config['merchantId']),
-            ]));
-            return true;
-        }
-
-        $baseString = sprintf('%s%s%s%s', ...[
+        $baseString = sprintf('%s%s%s%s%s', ...[
                 $shopeeSDK->config['partnerId'],
                 $this->uri,
                 $this->timestamp,
                 $shopeeSDK->config['accessToken'],
+                $shopeeSDK->config['shopId']
             ]
         );
 
-        $query = [
+        $this->commonQueryString = [
             'partner_id'   => $shopeeSDK->config['partnerId'],
             'timestamp'    => $this->timestamp,
             'access_token' => $shopeeSDK->config['accessToken'],
+            'shop_id'      => $shopeeSDK->config['shopId'],
+            'sign'         => $this->generateSign($baseString, $shopeeSDK->config['partnerKey']),
         ];
-
-        switch($this->apiType) {
-            case 'shop':
-                $query['shop_id'] = $shopeeSDK->config['shopId'];
-                $baseString .= $shopeeSDK->config['shopId'];
-                break;
-            case 'merchant':
-                $query['merchant_id'] = $shopeeSDK->config['merchantId'];
-                $baseString .= $shopeeSDK->config['merchantId'];
-                break;
-            default:
-                break;
-        }
-
-        $this->commonQueryString = http_build_query(array_merge($query, [
-            'sign' => $this->generateSign($baseString, $shopeeSDK->config['merchantId']),
-        ]));
     }
 
     /**
@@ -131,7 +100,7 @@ trait Api
      */
     public function setHttpClient()
     {
-        $this->httpClient = Http::timeout($this->timeout)->retry($this->times, $this->sleep);
+        $this->httpClient = Http::withOptions(['verify' =>false])->timeout($this->timeout)->retry($this->times, $this->sleep);
         return $this;
     }
 
@@ -227,9 +196,10 @@ trait Api
         $this->generateUrl();
         $resource = sprintf('%s%s', $this->url, $this->uri);
         $response = match ($this->requestMethod) {
-            'get' => $this->httpClient()->get($resource, $this->queryString ?? []),
-            'post' => $this->httpClient()->post($resource),
+            'get' => $this->httpClient()->get($resource, array_merge($this->queryString ?? [], $this->commonQueryString)),
+            'post' => $this->httpClient()->post(sprintf('%s?%s', $resource, http_build_query($this->commonQueryString))),
         };
+
         $this->setResponse($response);
         $response->throw();
         return $response->json();

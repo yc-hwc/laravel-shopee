@@ -7,10 +7,6 @@ use PHPShopee\V2\Traits\Api;
 
 abstract class ShopeeResource
 {
-    use Api;
-
-    protected $resourceUrl;
-
     protected $parentResource;
 
     protected $childResources;
@@ -20,7 +16,8 @@ abstract class ShopeeResource
     public function __construct(ShopeeSDK $shopeeSDK)
     {
         $this->shopeeSDK = $shopeeSDK;
-        $this->resourceUrl = &$shopeeSDK->config['shopeeUrl'];
         $this->setHttpClient();
     }
+
+    public abstract function setHttpClient();
 }
