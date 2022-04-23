@@ -7,6 +7,7 @@ composer require yc-hwc/laravel-shopee
 ````
 
 ### 用法
+***
 
 #### 配置
 ````
