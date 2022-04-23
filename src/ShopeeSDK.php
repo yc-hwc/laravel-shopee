@@ -3,11 +3,12 @@
 namespace PHPShopee;
 
 use PHPShopee\Exception\SdkException;
-
 use PHPShopee\V2\FirstMile;
+use PHPShopee\V2\Shop;
 
 /**
  * @property-read FirstMile $firstMile
+ * @property-read Shop $shop
  */
 class ShopeeSDK
 {
@@ -19,13 +20,12 @@ class ShopeeSDK
     ];
 
     public $config = [
-        'shopeeUrl' => '',
-        'apiVersion' => '',
-        'partnerId' => '',
-        'timestamp' => '',
+        'shopeeUrl'   => '',
+        'apiVersion'  => '',
+        'partnerId'   => '',
+        'partnerKey'  => '',
         'accessToken' => '',
-        'shopId' => '',
-        'sign' => '',
+        'shopId'      => '',
     ];
 
     public function __construct($config)

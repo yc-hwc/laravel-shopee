@@ -11,12 +11,11 @@ composer require yc-hwc/laravel-shopee
 <?php
 
     $config = [
-        'shopeeUrl' => '',
-        'partnerId' => '',
-        'timestamp' => '',
+        'shopeeUrl'   => '',
+        'partnerId'   => '',
+        'partnerKey'  => '',
         'accessToken' => '',
-        'shopId' => '',
-        'sign' => '',
+        'shopId'      => '',
     ];
     
     $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
