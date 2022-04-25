@@ -19,5 +19,29 @@ abstract class ShopeeResource
         $this->setHttpClient();
     }
 
+    /**
+     * @Author: hwj
+     * @DateTime: 2022/4/25 12:14
+     * @param $resourceName
+     * @return static
+     */
+    public function __get($resourceName)
+    {
+        return $this->$resourceName();
+    }
+
+    /**
+     * @Author: hwj
+     * @DateTime: 2022/4/25 12:02
+     * @param $resourceName
+     * @param $arguments
+     * @return staitc
+     */
+    public function __call($resourceName, $arguments)
+    {
+        $this->childResources = sprintf('/%s', $resourceName);
+        return $this;
+    }
+
     public abstract function setHttpClient();
 }

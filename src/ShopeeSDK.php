@@ -5,10 +5,12 @@ namespace PHPShopee;
 use PHPShopee\Exception\SdkException;
 use PHPShopee\V2\FirstMile;
 use PHPShopee\V2\Shop;
+use PHPShopee\V2\Auth;
 
 /**
  * @property-read FirstMile $firstMile
  * @property-read Shop $shop
+ * @property-read Auth $auth
  */
 class ShopeeSDK
 {
@@ -17,7 +19,8 @@ class ShopeeSDK
 
     protected $resources = [
         'firstMile',
-        'shop'
+        'shop',
+        'auth'
     ];
 
     public $config = [

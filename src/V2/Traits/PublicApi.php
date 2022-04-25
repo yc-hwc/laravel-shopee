@@ -4,7 +4,7 @@
 namespace PHPShopee\V2\Traits;
 
 
-class PublicApi
+trait PublicApi
 {
     use Api;
 

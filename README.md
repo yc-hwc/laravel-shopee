@@ -23,6 +23,7 @@ composer require yc-hwc/laravel-shopee
 ````
 #### [店铺授权](https://open.shopee.com/documents/v2/[中文版]%20OpenAPI%202.0%20Overview?module=87&type=2)
 ````
+    示例1
     $config = [
         'shopeeUrl'  => 'https://partner.test-stable.shopeemobile.com',
         'partnerId'  => 'xxxxxxx',
@@ -38,6 +39,42 @@ composer require yc-hwc/laravel-shopee
         ->get();
 
     return $response;
+    
+    示例2
+    $config = [
+        'shopeeUrl'  => 'https://partner.test-stable.shopeemobile.com',
+        'partnerId'  => 'xxxxxxx',
+        'partnerKey' => 'xxxxxxxxxxxxxx',
+    ];
+
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
+    $response = $shopeeSDK->shop
+        ->auth_partner()
+        ->withQueryString([
+            'redirect' => 'https://www.baidu.com/',
+        ])
+        ->get();
+
+    return $response;
+    
+    示例3
+    $config = [
+        'shopeeUrl'  => 'https://partner.test-stable.shopeemobile.com',
+        'partnerId'  => 'xxxxxxx',
+        'partnerKey' => 'xxxxxxxxxxxxxx',
+    ];
+
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
+    $response = $shopeeSDK->shop
+        ->auth_partner
+        ->withQueryString([
+            'redirect' => 'https://www.baidu.com/',
+        ])
+        ->get();
+
+    return $response;
+    
+    
 ````
 #### [generate first mile tracking number](https://open.shopee.com/documents/v2/v2.first_mile.generate_first_mile_tracking_number?module=96&type=1)
 ````
