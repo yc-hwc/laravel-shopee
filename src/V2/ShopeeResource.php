@@ -39,7 +39,18 @@ abstract class ShopeeResource
      */
     public function __call($resourceName, $arguments)
     {
-        $this->childResources = sprintf('/%s', $resourceName);
+        return $this->api($resourceName);
+    }
+
+    /**
+     * @Author: hwj
+     * @DateTime: 2022/4/25 14:06
+     * @param $childResources
+     * @return $this
+     */
+    public function api($childResources)
+    {
+        $this->childResources = sprintf('/%s', $childResources);
         return $this;
     }
 
