@@ -13,6 +13,8 @@ trait Api
 
     public $uri;
 
+    public $fullUrl;
+
     protected $queryString;
 
     protected $commonQueryString;
@@ -52,6 +54,16 @@ trait Api
         $this->timestamp = time();
         $this->setApiCommonParameters();
         return $this;
+    }
+
+    public function fullUrl()
+    {
+        $this->generateUrl();
+        return $this->fullUrl = sprintf('%s%s?%s', ...[
+            $this->url,
+            $this->uri,
+            http_build_query(array_merge($this->queryString?? [], $this->commonQueryString))
+        ]);
     }
 
     /**
@@ -193,11 +205,10 @@ trait Api
      */
     public function run()
     {
-        $this->generateUrl();
-        $resource = sprintf('%s%s', $this->url, $this->uri);
+        $resource = $this->fullUrl();
         $response = match ($this->requestMethod) {
-            'get' => $this->httpClient()->get($resource, array_merge($this->queryString ?? [], $this->commonQueryString)),
-            'post' => $this->httpClient()->post(sprintf('%s?%s', $resource, http_build_query($this->commonQueryString))),
+            'get' => $this->httpClient()->get($resource),
+            'post' => $this->httpClient()->post($resource),
         };
 
         $this->setResponse($response);

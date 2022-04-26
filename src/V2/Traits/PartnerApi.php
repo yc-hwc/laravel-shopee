@@ -22,11 +22,4 @@ trait PartnerApi
             'sign' => $this->generateSign($baseString, $this->shopeeSDK->config['partnerKey']),
         ];
     }
-
-    public function run()
-    {
-        $this->generateUrl();
-        $resource = sprintf('%s%s?%s', $this->url, $this->uri, http_build_query(array_merge($this->commonQueryString, $this->queryString?? [])));
-        return redirect($resource);
-    }
 }

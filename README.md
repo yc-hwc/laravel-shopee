@@ -30,14 +30,14 @@ composer require yc-hwc/laravel-shopee
     ];
 
     $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
-    $response = $shopeeSDK->shop
+    $fullUrl = $shopeeSDK->shop
         ->api('auth_partner')
         ->withQueryString([
             'redirect' => 'https://www.baidu.com/',
         ])
-        ->get();
+        ->fullUrl();
 
-    return $response;  
+    return redirect($fullUrl);  
 ````
 #### [generate first mile tracking number](https://open.shopee.com/documents/v2/v2.first_mile.generate_first_mile_tracking_number?module=96&type=1)
 ````
