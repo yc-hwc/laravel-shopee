@@ -40,6 +40,10 @@ trait Api
         'Accept'       => 'application/json',
     ];
 
+    protected $options = [
+        'verify' => false
+    ];
+
     protected $shopeeSDK;
 
     /**
@@ -112,7 +116,20 @@ trait Api
      */
     public function setHttpClient()
     {
-        $this->httpClient = Http::withOptions(['verify' =>false])->timeout($this->timeout)->retry($this->times, $this->sleep);
+        $this->httpClient = Http::withOptions($this->options)->timeout($this->timeout)->retry($this->times, $this->sleep);
+        return $this;
+    }
+
+    /**
+     * @Author: hwj
+     * @DateTime: 2022/4/26 20:33
+     * @param array $options
+     * @return static
+     */
+    public function withOptions(array $options)
+    {
+        $this->options = array_merge($this->options, $options);
+        $this->httpClient()->withOptions($this->options);
         return $this;
     }
 
@@ -207,7 +224,7 @@ trait Api
     {
         $resource = $this->fullUrl();
         $response = match ($this->requestMethod) {
-            'get' => $this->httpClient()->get($resource),
+            'get'  => $this->httpClient()->get($resource),
             'post' => $this->httpClient()->post($resource),
         };
 
