@@ -45,7 +45,7 @@ abstract class ShopeeResource
      * @Author: hwj
      * @DateTime: 2022/4/25 14:06
      * @param $childResources
-     * @return staitc
+     * @return static
      */
     public function api($childResources)
     {
