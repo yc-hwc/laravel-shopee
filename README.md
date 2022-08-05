@@ -1,5 +1,5 @@
 # laravel-shopee
-laravel v2 SDK
+shopee v2 SDK
 
 #### 安装教程
 ````
