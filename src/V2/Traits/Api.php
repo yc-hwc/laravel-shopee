@@ -17,6 +17,8 @@ trait Api
 
     protected $queryString;
 
+    protected $additionQueryStirng = '';
+
     protected $commonQueryString;
 
     protected $timestamp;
@@ -63,11 +65,17 @@ trait Api
     public function fullUrl()
     {
         $this->generateUrl();
-        return $this->fullUrl = sprintf('%s%s?%s', ...[
+        return $this->fullUrl = sprintf('%s%s?%s%s', ...[
             $this->url,
             $this->uri,
-            http_build_query(array_merge($this->queryString?? [], $this->commonQueryString))
+            http_build_query(array_merge($this->queryString?? [], $this->commonQueryString)),
+            $this->additionQueryStirng
         ]);
+    }
+
+    public function additionQueryStirng(array $queryString)
+    {
+        $this->additionQueryStirng .= '&' . http_build_query($queryString);
     }
 
     /**
@@ -218,7 +226,7 @@ trait Api
      * @Author: hwj
      * @DateTime: 2022/4/20 17:49
      * @return array|mixed
-     * @throws RequestException\
+     * @throws RequestException
      */
     public function run()
     {
@@ -281,7 +289,7 @@ trait Api
      */
     public function withQueryString(array $queryString)
     {
-        $this->queryString  = $queryString;
+        $this->queryString = $queryString;
         return $this;
     }
 
