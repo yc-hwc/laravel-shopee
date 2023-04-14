@@ -11,7 +11,7 @@ trait MerchantApi
     protected function setApiCommonParameters()
     {
         $shopeeSDK = &$this->shopeeSDK;
-        $baseString = sprintf('%s%s%s%s', ...[
+        $baseString = sprintf('%s%s%s%s%s', ...[
                 $shopeeSDK->config['partnerId'],
                 $this->uri,
                 $this->timestamp,

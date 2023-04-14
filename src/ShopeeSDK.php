@@ -92,6 +92,7 @@ class ShopeeSDK
         'partnerKey'  => '',
         'accessToken' => '',
         'shopId'      => '',
+        'merchantId'  => '',
     ];
 
     public function __construct($config)

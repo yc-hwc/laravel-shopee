@@ -17,6 +17,7 @@ composer require yc-hwc/laravel-shopee
         'partnerKey'  => '',
         'accessToken' => '',
         'shopId'      => '',
+        'merchantId'  => '',
     ];
     
     $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
