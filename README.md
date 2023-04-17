@@ -70,3 +70,18 @@ composer require yc-hwc/laravel-shopee
     
     print_r($response);
 ````
+#### [media_space.upload_image ](https://open.shopee.cn/documents/v2/v2.media_space.upload_image?module=91&type=1)
+````
+    $config = [
+        'shopeeUrl'   => '',
+        'partnerId'   => '',
+        'partnerKey'  => '',
+    ];
+
+    $shopeeSDK = ShopeeSDK::config($config);
+    $response = $shopeeSDK->mediaSpace()
+        ->api('upload_image')
+        ->attach('image', $content, 'image')
+        ->post();
+    print_r($response);
+````

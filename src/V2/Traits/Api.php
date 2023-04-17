@@ -73,9 +73,16 @@ trait Api
         ]);
     }
 
+    /**
+     * @Author: hwj
+     * @DateTime: 2023/4/17 19:10
+     * @param array $queryString
+     * @return $this
+     */
     public function additionQueryStirng(array $queryString)
     {
         $this->additionQueryStirng .= '&' . http_build_query($queryString);
+        return $this;
     }
 
     /**
@@ -177,6 +184,21 @@ trait Api
     public function httpClient()
     {
         return $this->httpClient;
+    }
+
+    /**
+     * Attach a file to the request.
+     *
+     * @param  string|array  $name
+     * @param  string|resource  $contents
+     * @param  string|null  $filename
+     * @param  array  $headers
+     * @return $this
+     */
+    public function attach($name, $contents = '', $filename = null, array $headers = [])
+    {
+        $this->httpClient()->attach($name, $contents , $filename, $headers);
+        return $this;
     }
 
     /**

@@ -4,11 +4,11 @@
 namespace PHPShopee\V2;
 
 
-use PHPShopee\V2\Traits\ShopApi;
+use PHPShopee\V2\Traits\PartnerApi;
 
 class MediaSpace extends ShopeeResource
 {
-    use ShopApi;
+    use PartnerApi;
 
     protected $parentResource = '/api/v2/media_space';
 }
