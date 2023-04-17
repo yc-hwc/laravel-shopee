@@ -72,16 +72,21 @@ composer require yc-hwc/laravel-shopee
 ````
 #### [media_space.upload_image ](https://open.shopee.cn/documents/v2/v2.media_space.upload_image?module=91&type=1)
 ````
+    $content = file_get_contents('path/to/file');
+
     $config = [
         'shopeeUrl'   => '',
         'partnerId'   => '',
         'partnerKey'  => '',
     ];
 
-    $shopeeSDK = ShopeeSDK::config($config);
+    $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
     $response = $shopeeSDK->mediaSpace()
         ->api('upload_image')
-        ->attach('image', $content, 'image')
+        ->attach([
+            ['image', $content, md5($content)],
+            ['scene', 'normal'],
+        ])
         ->post();
     print_r($response);
 ````
