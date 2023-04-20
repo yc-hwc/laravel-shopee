@@ -1,5 +1,5 @@
 # laravel-shopee
-shopee v2 SDK
+laravel v2 SDK
 
 #### 安装教程
 ````
@@ -83,10 +83,7 @@ composer require yc-hwc/laravel-shopee
     $shopeeSDK = \PHPShopee\ShopeeSDK::config($config);
     $response = $shopeeSDK->mediaSpace()
         ->api('upload_image')
-        ->attach([
-            ['image', $content, md5($content)],
-            ['scene', 'normal'],
-        ])
-        ->post();
+        ->attach('image', $content, md5($content))
+        ->post(['scene' => 'normal']);
     print_r($response);
 ````

@@ -37,6 +37,8 @@ trait Api
 
     protected $response;
 
+    protected array $postData = [];
+
     protected $headers = [
         'Content-type' => 'application/json',
         'Accept'       => 'application/json',
@@ -203,12 +205,14 @@ trait Api
 
     /**
      * @Author: hwj
-     * @DateTime: 2022/4/20 17:48
+     * @DateTime: 2023/4/20 19:24
+     * @param array $postData
      * @return array|mixed
      * @throws RequestException
      */
-    public function post()
+    public function post(array $postData = [])
     {
+        $this->postData = $postData;
         return $this->setRequestMethod('post')->run();
     }
 
@@ -255,12 +259,19 @@ trait Api
         $resource = $this->fullUrl();
         $response = match ($this->requestMethod) {
             'get'  => $this->httpClient()->get($resource),
-            'post' => $this->httpClient()->post($resource),
+            'post' => $this->httpClient()->post($resource, $this->postData),
         };
+
+        $this->clearPoatData();
 
         $this->setResponse($response);
         $response->throw();
         return $response->json();
+    }
+
+    protected function clearPoatData()
+    {
+        $this->postData = [];
     }
 
     /**
