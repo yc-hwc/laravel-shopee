@@ -15,10 +15,8 @@ class MediaSpace extends ShopeeResource
     protected function setApiCommonParameters()
     {
         return match ($this->childResources) {
-            'init_video_upload',
-            '/api/v2/media_space/init_video_upload',
-            'get_video_upload_result',
-            '/api/v2/media_space/get_video_upload_result' => $this->shopApiCommonParameters(),
+            '/init_video_upload',
+            '/get_video_upload_result' => $this->shopApiCommonParameters(),
             default => $this->partnerApiCommonParameters(),
         };
     }
